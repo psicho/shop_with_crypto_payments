@@ -3,6 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 # from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
 from .models import Category, Product
+from cart.forms import CartAddProductForm
 
 
 class ProductListView(ListView):
@@ -50,13 +51,16 @@ class ProductDetailView(DetailView):
                     .filter(id=kwargs['id'],
                             slug=kwargs['slug']))
         product = get_object_or_404(queryset)
-        context = self.get_context_data(product)
+        cart_product_form = CartAddProductForm()
+        context = self.get_context_data(product, cart_product_form)
+
         return self.render_to_response(context)
 
-    def get_context_data(self, product: Product, **kwargs):
+    def get_context_data(self, product: Product, cart_product_form: CartAddProductForm(), **kwargs):
 
         context = {
             'product': product,
+            'cart_product_form': cart_product_form,
             # 'categories': categories,
             # 'category': category,
         }

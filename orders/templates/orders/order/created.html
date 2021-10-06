@@ -1,0 +1,12 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+  Thank you
+{% endblock %}
+
+{% block content %}
+  <h1>Спасибо!</h1>
+  <p>Ваш заказ N<strong>{{ order.id }}</strong> создан и ожидает оплаты.</p>
+    <p>Сумма заказа: {{ order.get_total_cost }} ETH.</p>
+    <p>Ethereum кошелёк для оплаты: <strong>0xA0909Aa38398f71651AAB361ef4d534AB4EEe354</strong></p>
+{% endblock %}

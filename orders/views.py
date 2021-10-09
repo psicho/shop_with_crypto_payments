@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
-# from .tasks import order_created
+from .tasks import order_created, payment_received
+from django.urls import reverse
 
 
 def order_create(request):
@@ -18,8 +19,9 @@ def order_create(request):
                                         quantity=item['quantity'])
             # clear the cart
             cart.clear()
-            # launch asynchronous task
-            # order_created.delay(order.id)
+            # launch asynchronous tasks
+            order_created.delay(order.id)
+            payment_received.delay(order.id)
             return render(request,
                           'orders/order/created.html',
                           {'order': order})

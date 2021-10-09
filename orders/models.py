@@ -13,8 +13,9 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    ethereum_wallet = models.CharField(verbose_name=_('Ethereum wallet (кошелёк с которого '
-                                                      'будет производиться оплата заказа)'), max_length=50)
+    ethereum_wallet = (models.CharField(default='',
+                                        verbose_name=_('Ethereum wallet (кошелёк с которого '
+                                                       'будет производиться оплата заказа)'), max_length=50))
 
     class Meta:
         ordering = ('-created',)
